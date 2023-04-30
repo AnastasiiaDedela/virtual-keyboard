@@ -2,7 +2,9 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: './script.js', // точка входа
+  entry: {
+    main: ['./src/script.js', './src/style.css'],
+  },
   output: {
     path: path.resolve(__dirname, 'dist'), // путь к папке, куда будут сохраняться файлы после сборки
     filename: 'bundle.js', // имя собранного файла
@@ -51,7 +53,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './index.html', // путь к исходному HTML-файлу
+      template: './src/index.html', // путь к исходному HTML-файлу
     }),
   ],
 };
