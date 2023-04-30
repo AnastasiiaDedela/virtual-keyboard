@@ -1,6 +1,6 @@
 body {
   padding-top: 20px;
-  background-color: #150954c6;
+  background-color: #397ad6a1;
 }
 .keyboard {
   display: flex;
@@ -11,8 +11,8 @@ body {
   margin: 0 auto;
   padding: 10px;
   row-gap: 6px;
-  max-width: 951px;
-  background-color: #eceef0;
+  max-width: 1000px;
+  background-color: #eceef0de;
   box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
   font-family: 'Noto Sans', sans-serif;
 }
@@ -21,8 +21,12 @@ body {
   display: flex;
   justify-content: center;
   column-gap: 6px;
+  flex: 0;
 }
 
+.row:nth-child(2) {
+  flex: 1;
+}
 .key {
   display: flex;
   justify-content: center;
@@ -35,7 +39,7 @@ body {
   transition: all 0.2s ease-in-out;
   font-weight: bold;
   box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 6px;
-  background-color: #482d75b1;
+  background-color: #06235ac9;
   color: #fff;
 }
 .text-area {
@@ -82,7 +86,7 @@ body {
 }
 
 .shift {
-  width: 100px;
+  flex: 1;
 }
 
 .shift:last-child {
@@ -105,7 +109,9 @@ body {
 
 .arrow-up {
 }
-
+.ctrl {
+  flex: 1;
+}
 /* Pressed key style */
 .key:active {
   background-color: #b1b1b1;
