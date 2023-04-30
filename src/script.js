@@ -1,6 +1,6 @@
 import {
   KEY_CODES,
-  KEYS_EN, 
+  KEYS_EN,
   KEYS_EN_CAPS,
   KEYS_EN_SHIFT,
   KEYS_EN_CAPS_SHIFT,
@@ -12,21 +12,13 @@ import {
 
 import './style.css';
 
-const keyboardLayout = [
-  ['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace'],
-  ['Tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\', 'Del'],
-  ['Caps Lock', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', "'", 'Enter'],
-  ['Shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', '↑', 'Shift'],
-  ['Ctrl', 'Win', 'Alt', 'Space', 'Alt', '←', '↓', '→', 'Ctrl'],
-];
-
 const body = document.querySelector('body');
 const keyboardContainer = document.createElement('div');
 keyboardContainer.classList.add('keyboard');
 
 // Create the keyboard container element
 
-keyboardLayout.forEach((row) => {
+KEYS_EN.forEach((row) => {
   const rowElement = document.createElement('div');
   rowElement.classList.add('row');
 
