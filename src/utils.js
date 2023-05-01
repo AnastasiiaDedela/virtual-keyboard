@@ -1,7 +1,7 @@
 export const handleBackspace = (textarea) => {
   const { value, selectionStart } = textarea;
-
   const newValue = value.slice(0, selectionStart - 1) + value.slice(selectionStart);
+
   if (selectionStart > 0) {
     textarea.value = newValue;
     textarea.selectionStart = selectionStart - 1;

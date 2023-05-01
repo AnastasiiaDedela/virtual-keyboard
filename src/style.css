@@ -152,3 +152,10 @@ body {
   background-color: #b1b1b1;
   color: white;
 }
+
+.message {
+  font-weight: bold;
+  color: black;
+  text-align: center;
+  padding-top: 10px;
+}
