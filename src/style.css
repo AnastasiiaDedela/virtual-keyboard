@@ -6,11 +6,11 @@ body {
   display: flex;
   flex-direction: column;
   border: 1px solid gray;
-  border-radius: 5px;
+  border-radius: 10px;
   font-size: 16px;
   margin: 0 auto;
-  padding: 10px;
-  row-gap: 6px;
+  padding: 15px;
+  row-gap: 8px;
   max-width: 1000px;
   background-color: #eceef0de;
   box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
@@ -20,7 +20,7 @@ body {
 .row {
   display: flex;
   justify-content: center;
-  column-gap: 6px;
+  column-gap: 8px;
   flex: 0;
 }
 
@@ -42,6 +42,20 @@ body {
   background-color: #06235ac9;
   color: #fff;
 }
+
+.highlighted {
+  animation: key-press 0.6s linear;
+}
+
+@keyframes key-press {
+  0 {
+    background-color: green;
+  }
+  100% {
+    background-color: yellow;
+  }
+}
+
 .text-area {
   display: block;
   top: 50%;
@@ -83,6 +97,7 @@ body {
 }
 
 .caps-lock {
+  min-width: 100px;
 }
 
 .shift {
@@ -90,7 +105,7 @@ body {
 }
 
 .shift:last-child {
-  min-width: 96px;
+  max-width: 103px;
 }
 .shift-left {
 }
@@ -113,9 +128,9 @@ body {
   flex: 1;
 }
 /* Pressed key style */
-.key:active {
+/* .key:active {
   background-color: #b1b1b1;
-}
+} */
 
 /* Caps lock active style */
 .caps-lock.active {

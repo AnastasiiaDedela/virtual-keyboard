@@ -12,12 +12,35 @@ import {
 
 import './style.css';
 
+import {
+  addKeyupKeydownEvents,
+  addAnimationEvents,
+  handleBackspace,
+  handleDel,
+} from './utils';
+
+const specialKeys = [
+  'Backspace',
+  'Del',
+  'Shift',
+  'Enter',
+  'Caps Lock',
+  'Tab',
+  'Space',
+  'Alt',
+  'Ctrl',
+  'Win',
+];
 const body = document.querySelector('body');
 const keyboardContainer = document.createElement('div');
 keyboardContainer.classList.add('keyboard');
 
-let capslockActive = false;
 let lang = 'eng';
+const capslockActive = { value: false };
+
+const setState = (obj, value) => {
+  obj.value = value;
+};
 
 function deleteRows() {
   const rows = document.querySelectorAll('.row');
@@ -27,6 +50,7 @@ function deleteRows() {
 }
 
 const drawKeyboard = function (keysArray) {
+  let newKeys = [];
   keysArray.forEach((row) => {
     const rowElement = document.createElement('div');
     rowElement.classList.add('row');
@@ -59,103 +83,136 @@ const drawKeyboard = function (keysArray) {
         keyElement.classList.add('ctrl');
       }
       rowElement.appendChild(keyElement);
+      newKeys.push(keyElement);
     });
     keyboardContainer.appendChild(rowElement);
   });
+  return newKeys;
 };
 
 const switchLang = (lang, capslockActive) => {
   deleteRows();
+  let newKeys = [];
   if (lang === 'eng' && capslockActive === false) {
-    drawKeyboard(KEYS_ENG);
+    newKeys = drawKeyboard(KEYS_ENG);
   } else if (lang === 'eng' && capslockActive === true) {
-    drawKeyboard(KEYS_ENG_CAPS);
+    newKeys = drawKeyboard(KEYS_ENG_CAPS);
   } else if (lang === 'ru' && capslockActive === false) {
-    drawKeyboard(KEYS_RU);
+    newKeys = drawKeyboard(KEYS_RU);
   } else if (lang === 'ru' && capslockActive === true) {
-    drawKeyboard(KEYS_RU_CAPS);
+    newKeys = drawKeyboard(KEYS_RU_CAPS);
   }
   document.body.appendChild(keyboardContainer);
+
+  return newKeys;
 };
 
-switchLang(lang, capslockActive);
+function addOnclickEvents(textarea, keys) {
+  keys.forEach((key) => {
+    if (specialKeys.includes(key.textContent)) {
+      if (key.textContent === 'Space') {
+        key.addEventListener('click', () => {
+          textarea.value += ' ';
+          textarea.focus();
+        });
+      } else if (key.textContent === 'Enter') {
+        key.addEventListener('click', () => {
+          textarea.value += '\n';
+          textarea.focus();
+        });
+      } else if (key.textContent === 'Tab') {
+        key.addEventListener('click', () => {
+          textarea.value += '    '; // '\t'
+          textarea.focus();
+        });
+      } else if (key.textContent === 'Caps Lock') {
+        key.addEventListener('click', () => {
+          setState(capslockActive, !capslockActive.value);
+          const newKeys = switchLang(lang, capslockActive.value);
+          addKeyupKeydownEvents(newKeys);
+          addAnimationEvents(newKeys);
+          addOnclickEvents(textarea, newKeys);
+        });
+      } else if (key.textContent === 'Backspace') {
+        key.addEventListener('click', handleBackspace);
+        window.addEventListener('keydown', (event) => {
+          if (event.key === 'Backspace') {
+            handleBackspace(textarea);
+          }
+        });
+      } else if (key.textContent === 'Del') {
+        key.addEventListener('click', handleDel);
+        window.addEventListener('keydown', (event) => {
+          if (event.key === 'Delete') {
+            handleDel(textarea);
+          }
+        });
+      }
+    } else {
+      key.addEventListener('click', () => {
+        const value = key.textContent;
+        textarea.value += value;
+        textarea.focus();
+      });
+    }
+  });
+}
+
+// const keys = document.querySelectorAll('.key');
+const keys = switchLang(lang, capslockActive.value);
 
 // add textarea
 const textarea = document.createElement('textarea');
 body.insertBefore(textarea, keyboardContainer);
 textarea.classList.add('text-area');
 
-const specialKeys = ['Backspace', 'Del', 'Shift', 'Enter', 'Caps Lock', 'Tab', 'Space', 'Alt', 'Ctrl', 'Win'];
-const keys = document.querySelectorAll('.key');
+addKeyupKeydownEvents(keys);
+addAnimationEvents(keys);
+addOnclickEvents(textarea, keys);
 
-const handleBackspace = () => {
-  const cursorPos = textarea.selectionStart;
-  const value = textarea.value;
-  const newValue = value.slice(0, cursorPos - 1) + value.slice(cursorPos);
-  if (cursorPos > 0) {
-    textarea.value = newValue;
-    textarea.selectionStart = cursorPos - 1;
-    textarea.selectionEnd = cursorPos - 1;
+// Store the language in localStorage when the Shift + Alt combination is pressed
+let shiftPressed = false;
+let altPressed = false;
+
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Shift') {
+    shiftPressed = true;
   }
-  textarea.focus();
-};
 
-const handleDel = () => {
-  const cursorPos = textarea.selectionStart;
-  const value = textarea.value;
-  const newValue = value.slice(0, cursorPos) + value.slice(cursorPos + 1);
-  if (cursorPos < value.length) {
-    textarea.value = newValue;
-    textarea.selectionStart = cursorPos;
-    textarea.selectionEnd = cursorPos;
+  if (event.key === 'Alt') {
+    altPressed = true;
   }
-  textarea.focus();
-};
 
-keys.forEach((key) => {
-  if (specialKeys.includes(key.textContent)) {
-    if (key.textContent === 'Space') {
-      key.addEventListener('click', () => {
-        textarea.value += ' ';
-        textarea.focus();
-      });
-    } else if (key.textContent === 'Enter') {
-      key.addEventListener('click', () => {
-        textarea.value += '\n';
-        textarea.focus();
-      });
-    } else if (key.textContent === 'Tab') {
-      key.addEventListener('click', () => {
-        textarea.value += '    ';
-        textarea.focus();
-      });
-    } else if (key.textContent === 'Caps Lock') {
-      key.addEventListener('click', () => {
-        capslockActive = !capslockActive; // Toggle the state of the Caps Lock
-        switchLang(lang, capslockActive);
-      });
-    } else if (key.textContent === 'Backspace') {
-      key.addEventListener('click', handleBackspace);
-      window.addEventListener('keydown', (event) => {
-        if (event.key === 'Backspace') {
-          handleBackspace();
-        }
-      });
-    } else if (key.textContent === 'Del') {
-      key.addEventListener('click', handleDel);
-      window.addEventListener('keydown', (event) => {
-        if (event.key === 'Delete') {
-          handleDel();
-        }
-      });
-    }
-  } else {
-    key.addEventListener('click', () => {
-      const value = key.textContent;
-      textarea.value += value;
-      textarea.focus();
-    });
+  if (shiftPressed && altPressed) {
+    localStorage.setItem('language', 'eng');
   }
 });
 
-// add onclick event
+document.addEventListener('keyup', (event) => {
+  if (event.key === 'Control') {
+    shiftPressed = false;
+  }
+
+  if (event.key === 'Alt') {
+    altPressed = false;
+  }
+});
+// console.log(capslockActive, "201");
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'CapsLock') {
+    console.log(capslockActive);
+    console.log("CHANGING CAPSLOCKACTIVE IN KEYDOWN: ")
+    setState(capslockActive, !capslockActive.value);
+    console.log(capslockActive);
+    const newKeys = switchLang(lang, capslockActive.value);
+    newKeys.forEach((key) => {
+      if (key.textContent === 'Caps Lock') {
+        console.log('caps');
+        key.classList.add('highlighted');
+      }
+    });
+    addKeyupKeydownEvents(newKeys);
+    addAnimationEvents(newKeys);
+    addOnclickEvents(textarea, newKeys);
+  }
+});
