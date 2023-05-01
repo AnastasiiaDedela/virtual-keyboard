@@ -148,15 +148,19 @@ function addOnclickEvents(textarea, keys) {
           addOnclickEvents(textarea, newKeys);
         });
       } else if (key.textContent === 'Backspace') {
-        key.addEventListener('click', handleBackspace);
+        key.addEventListener('click', () => {
+          handleBackspace(textarea);
+        });
         window.addEventListener('keydown', (event) => {
           if (event.key === 'Backspace') {
             handleBackspace(textarea);
           }
         });
       } else if (key.textContent === 'Del') {
-        key.addEventListener('click', handleDel);
-        window.addEventListener('keydown', (event) => {
+        key.addEventListener('click', () => {
+          handleDel(textarea);
+        });
+        document.addEventListener('keydown', (event) => {
           if (event.key === 'Delete') {
             handleDel(textarea);
           }

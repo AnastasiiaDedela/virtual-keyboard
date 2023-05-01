@@ -1,19 +1,19 @@
 export const handleBackspace = (textarea) => {
-  const cursorPos = textarea.selectionStart;
-  const value = textarea.value;
-  const newValue = value.slice(0, cursorPos - 1) + value.slice(cursorPos);
-  if (cursorPos > 0) {
+  const { value, selectionStart } = textarea;
+
+  const newValue = value.slice(0, selectionStart - 1) + value.slice(selectionStart);
+  if (selectionStart > 0) {
     textarea.value = newValue;
-    textarea.selectionStart = cursorPos - 1;
-    textarea.selectionEnd = cursorPos - 1;
+    textarea.selectionStart = selectionStart - 1;
+    textarea.selectionEnd = selectionStart - 1;
   }
   textarea.focus();
 };
 
 export const handleDel = (textarea) => {
-  const cursorPos = textarea.selectionStart;
-  const value = textarea.value;
+  const { value, selectionStart: cursorPos } = textarea;
   const newValue = value.slice(0, cursorPos) + value.slice(cursorPos + 1);
+
   if (cursorPos < value.length) {
     textarea.value = newValue;
     textarea.selectionStart = cursorPos;
