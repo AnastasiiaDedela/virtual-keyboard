@@ -1,0 +1,154 @@
+body {
+  padding-top: 20px;
+  background-color: #397ad6a1;
+}
+.keyboard {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid gray;
+  border-radius: 10px;
+  font-size: 16px;
+  margin: 0 auto;
+  padding: 15px;
+  row-gap: 8px;
+  max-width: 1000px;
+  background-color: #eceef0de;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
+  font-family: 'Noto Sans', sans-serif;
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+  column-gap: 8px;
+  flex: 0;
+}
+
+.row:nth-child(2) {
+  flex: 1;
+}
+.key {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px 23px;
+  border: 1px solid gray;
+  border-radius: 5px;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.2s ease-in-out;
+  font-weight: bold;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 6px;
+  background-color: #06235ac9;
+  color: #ffffff;
+}
+
+.highlighted {
+  animation: key-press 0.4s ease-in-out;
+}
+
+@keyframes key-press {
+  0% {
+    transform: 0;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 6px;
+  }
+  50% {
+    transform: scale(1.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    background-color: #5daff3;
+  }
+  100% {
+    transform: scale(1.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    background-color: #5daff3;
+  }
+}
+
+.text-area {
+  display: block;
+  top: 50%;
+  padding: 15px;
+  width: 940px;
+  height: 150px;
+  margin: 0 auto;
+  margin-bottom: 30px;
+  resize: none;
+  border-radius: 5px;
+  background-color: #ffffffcf;
+  border-color: #714d90c6;
+  border: none;
+  color: #140077;
+  font-size: 22px;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
+}
+.dark-gray {
+  background-color: #d1d1d1;
+}
+
+.tab {
+  flex: 1;
+}
+
+.backspace {
+  width: 150px;
+}
+
+.delete {
+}
+
+.enter {
+  flex: 1;
+}
+
+.space {
+  width: 350px;
+}
+
+.caps-lock {
+  min-width: 100px;
+}
+
+.shift {
+  flex: 1;
+}
+
+.shift:last-child {
+  max-width: 103px;
+}
+.shift-left {
+}
+
+.shift-right {
+}
+
+.control-left {
+}
+
+.windows {
+}
+
+.alt-left {
+}
+
+.arrow-up {
+}
+.ctrl {
+  flex: 1;
+}
+/* Pressed key style */
+/* .key:active {
+  background-color: #b1b1b1;
+} */
+
+/* Caps lock active style */
+.caps-lock.active {
+  background-color: #b1b1b1;
+  color: white;
+}
+
+/* Shift active style */
+.shift-left.active,
+.shift-right.active {
+  background-color: #b1b1b1;
+  color: white;
+}
