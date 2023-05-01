@@ -35,7 +35,8 @@ const body = document.querySelector('body');
 const keyboardContainer = document.createElement('div');
 keyboardContainer.classList.add('keyboard');
 
-let lang = 'eng';
+let lang = localStorage.getItem('lang') || 'eng';
+// let lang = 'eng';
 const capslockActive = { value: false };
 // let shiftState = false;
 
@@ -151,19 +152,9 @@ function addOnclickEvents(textarea, keys) {
         key.addEventListener('click', () => {
           handleBackspace(textarea);
         });
-        window.addEventListener('keydown', (event) => {
-          if (event.key === 'Backspace') {
-            handleBackspace(textarea);
-          }
-        });
       } else if (key.textContent === 'Del') {
         key.addEventListener('click', () => {
           handleDel(textarea);
-        });
-        document.addEventListener('keydown', (event) => {
-          if (event.key === 'Delete') {
-            handleDel(textarea);
-          }
         });
       }
     } else {
@@ -204,17 +195,18 @@ document.addEventListener('keydown', (event) => {
 });
 
 document.addEventListener('keydown', (event) => {
-  console.log(event);
   if (event.shiftKey === true && event.altKey === true) {
     setState(capslockActive, capslockActive.value);
     if (lang === 'eng') {
       lang = 'ru';
+      localStorage.setItem('lang', lang);
       const newKeys = switchLang(lang, capslockActive.value);
       addKeyupKeydownEvents(newKeys);
       addAnimationEvents(newKeys);
       addOnclickEvents(textarea, newKeys);
     } else if (lang === 'ru') {
       lang = 'eng';
+      localStorage.setItem('lang', lang);
       const newKeys = switchLang(lang, capslockActive.value);
       addKeyupKeydownEvents(newKeys);
       addAnimationEvents(newKeys);
@@ -229,3 +221,8 @@ document.addEventListener('keydown', (event) => {
   //   addOnclickEvents(textarea, newKeys);
   // }
 });
+
+const message = document.createElement('div');
+message.classList.add('message');
+message.textContent = 'Операционаая система Windows, для переключения языка используй Shift + Alt';
+body.appendChild(message);
