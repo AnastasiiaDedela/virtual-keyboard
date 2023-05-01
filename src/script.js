@@ -37,6 +37,7 @@ keyboardContainer.classList.add('keyboard');
 
 let lang = 'eng';
 const capslockActive = { value: false };
+// let shiftState = false;
 
 const setState = (obj, value) => {
   obj.value = value;
@@ -90,18 +91,31 @@ const drawKeyboard = function (keysArray) {
   return newKeys;
 };
 
-const switchLang = (lang, capslockActive) => {
+const switchLang = (language, capslocState) => {
   deleteRows();
   let newKeys = [];
-  if (lang === 'eng' && capslockActive === false) {
+  if (language === 'eng' && capslocState === false) {
+    // if (shiftIsActive === true) {
+    //   newKeys = drawKeyboard(KEYS_ENG_SHIFT);
+    // }
     newKeys = drawKeyboard(KEYS_ENG);
-  } else if (lang === 'eng' && capslockActive === true) {
+  } else if (language === 'eng' && capslocState === true) {
+    // if (shiftIsActive === true) {
+    //   newKeys = drawKeyboard(KEYS_ENG_CAPS_SHIFT);
+    // }
     newKeys = drawKeyboard(KEYS_ENG_CAPS);
-  } else if (lang === 'ru' && capslockActive === false) {
+  } else if (language === 'ru' && capslocState === false) {
+    // if (shiftIsActive === true) {
+    //   newKeys = drawKeyboard(KEYS_RU_SHIFT);
+    // }
     newKeys = drawKeyboard(KEYS_RU);
-  } else if (lang === 'ru' && capslockActive === true) {
+  } else if (language === 'ru' && capslocState === true) {
+    // if (shiftIsActive === true) {
+    //   newKeys = drawKeyboard(KEYS_RU_CAPS_SHIFT);
+    // }
     newKeys = drawKeyboard(KEYS_RU_CAPS);
   }
+
   document.body.appendChild(keyboardContainer);
 
   return newKeys;
@@ -170,44 +184,12 @@ addKeyupKeydownEvents(keys);
 addAnimationEvents(keys);
 addOnclickEvents(textarea, keys);
 
-// Store the language in localStorage when the Shift + Alt combination is pressed
-let shiftPressed = false;
-let altPressed = false;
-
-document.addEventListener('keydown', (event) => {
-  if (event.key === 'Shift') {
-    shiftPressed = true;
-  }
-
-  if (event.key === 'Alt') {
-    altPressed = true;
-  }
-
-  if (shiftPressed && altPressed) {
-    localStorage.setItem('language', 'eng');
-  }
-});
-
-document.addEventListener('keyup', (event) => {
-  if (event.key === 'Control') {
-    shiftPressed = false;
-  }
-
-  if (event.key === 'Alt') {
-    altPressed = false;
-  }
-});
-// console.log(capslockActive, "201");
 document.addEventListener('keydown', (event) => {
   if (event.key === 'CapsLock') {
-    console.log(capslockActive);
-    console.log("CHANGING CAPSLOCKACTIVE IN KEYDOWN: ")
     setState(capslockActive, !capslockActive.value);
-    console.log(capslockActive);
     const newKeys = switchLang(lang, capslockActive.value);
     newKeys.forEach((key) => {
       if (key.textContent === 'Caps Lock') {
-        console.log('caps');
         key.classList.add('highlighted');
       }
     });
@@ -215,4 +197,31 @@ document.addEventListener('keydown', (event) => {
     addAnimationEvents(newKeys);
     addOnclickEvents(textarea, newKeys);
   }
+});
+
+document.addEventListener('keydown', (event) => {
+  console.log(event);
+  if (event.shiftKey === true && event.altKey === true) {
+    setState(capslockActive, capslockActive.value);
+    if (lang === 'eng') {
+      lang = 'ru';
+      const newKeys = switchLang(lang, capslockActive.value);
+      addKeyupKeydownEvents(newKeys);
+      addAnimationEvents(newKeys);
+      addOnclickEvents(textarea, newKeys);
+    } else if (lang === 'ru') {
+      lang = 'eng';
+      const newKeys = switchLang(lang, capslockActive.value);
+      addKeyupKeydownEvents(newKeys);
+      addAnimationEvents(newKeys);
+      addOnclickEvents(textarea, newKeys);
+    }
+  }
+  // if (event.key === 'Shift') {
+  //   shiftState = true;
+  //   const newKeys = switchLang(lang, capslockActive.value, );
+  //   addKeyupKeydownEvents(newKeys);
+  //   addAnimationEvents(newKeys);
+  //   addOnclickEvents(textarea, newKeys);
+  // }
 });

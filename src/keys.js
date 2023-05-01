@@ -70,5 +70,5 @@ export const KEY_CODES = [
   'KeyG', 'KeyH', 'KeyJ', 'KeyK', 'KeyL', 'Semicolon', 'Quote', 'Enter', 'ShiftLeft',
   'KeyZ', 'KeyX', 'KeyC', 'KeyV', 'KeyB', 'KeyN', 'KeyM', 'Comma', 'Period', 'Slash',
   'ArrowUp', 'ShiftRight', 'ControlLeft', 'MetaLeft', 'AltLeft', 'Space', 'AltRight',
-  'ArrowLeft', 'ArrowDown', 'ArrowRight', 'Ctrl',
+  'ArrowLeft', 'ArrowDown', 'ArrowRight', 'ControlRight',
 ];

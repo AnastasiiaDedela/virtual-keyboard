@@ -23,10 +23,18 @@ export const handleDel = (textarea) => {
 };
 
 export function addKeyupKeydownEvents(keyboardKeys) {
+  const ctrls = document.querySelectorAll('.ctrl');
+
+  ctrls[0].classList.add('controlLeft');
+  ctrls[1].classList.add('controlRight');
+
   document.addEventListener('keydown', (event) => {
     const pressedKey = event.key;
     keyboardKeys.forEach((key) => {
       if (key.textContent === pressedKey) {
+        key.classList.add('highlighted');
+      }
+      if (event.code === 'Space' && key.textContent === 'Space') {
         key.classList.add('highlighted');
       }
     });
@@ -36,6 +44,9 @@ export function addKeyupKeydownEvents(keyboardKeys) {
     const releasedKey = event.key;
     keyboardKeys.forEach((key) => {
       if (key.textContent === releasedKey) {
+        key.classList.remove('highlighted');
+      }
+      if (event.code === 'Space' && key.textContent === 'Space') {
         key.classList.remove('highlighted');
       }
     });
