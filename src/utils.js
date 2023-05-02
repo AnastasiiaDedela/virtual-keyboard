@@ -37,6 +37,27 @@ export function addKeyupKeydownEvents(keyboardKeys) {
       if (event.code === 'Space' && key.textContent === 'Space') {
         key.classList.add('highlighted');
       }
+      if (key.textContent === '↑' && pressedKey === 'ArrowUp') {
+        key.classList.add('highlighted');
+      }
+      if (key.textContent === '←' && pressedKey === 'ArrowLeft') {
+        key.classList.add('highlighted');
+      }
+      if (key.textContent === '↓' && pressedKey === 'ArrowDown') {
+        key.classList.add('highlighted');
+      }
+      if (key.textContent === '→' && pressedKey === 'ArrowRight') {
+        key.classList.add('highlighted');
+      }
+      if (key.textContent === 'Del' && pressedKey === 'Delete') {
+        key.classList.add('highlighted');
+      }
+      if (key.textContent === 'Ctrl' && pressedKey === 'Control') {
+        key.classList.add('highlighted');
+      }
+      if (key.textContent === 'Win' && pressedKey === 'Meta') {
+        key.classList.add('highlighted');
+      }
     });
   });
 
@@ -47,6 +68,27 @@ export function addKeyupKeydownEvents(keyboardKeys) {
         key.classList.remove('highlighted');
       }
       if (event.code === 'Space' && key.textContent === 'Space') {
+        key.classList.remove('highlighted');
+      }
+      if (key.textContent === '↑' && releasedKey === 'ArrowUp') {
+        key.classList.remove('highlighted');
+      }
+      if (key.textContent === '←' && releasedKey === 'ArrowLeft') {
+        key.classList.remove('highlighted');
+      }
+      if (key.textContent === '↓' && releasedKey === 'ArrowDown') {
+        key.classList.remove('highlighted');
+      }
+      if (key.textContent === '→' && releasedKey === 'ArrowRight') {
+        key.classList.remove('highlighted');
+      }
+      if (key.textContent === 'Del' && releasedKey === 'Delete') {
+        key.classList.remove('highlighted');
+      }
+      if (key.textContent === 'Ctrl' && releasedKey === 'Control') {
+        key.classList.remove('highlighted');
+      }
+      if (key.textContent === 'Win' && releasedKey === 'Meta') {
         key.classList.remove('highlighted');
       }
     });
