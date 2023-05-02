@@ -1,13 +1,8 @@
 import {
-  KEY_CODES,
   KEYS_ENG,
   KEYS_ENG_CAPS,
-  KEYS_ENG_SHIFT,
-  KEYS_ENG_CAPS_SHIFT,
   KEYS_RU,
-  KEYS_RU_SHIFT,
   KEYS_RU_CAPS,
-  KEYS_RU_CAPS_SHIFT,
 } from './keys.js';
 
 import './style.css';
@@ -221,6 +216,10 @@ document.addEventListener('keydown', (event) => {
   //   addOnclickEvents(textarea, newKeys);
   // }
 });
+
+document.addEventListener('keydown', (event) => {
+  console.log(event.key, event.code);
+})
 
 const message = document.createElement('div');
 message.classList.add('message');
